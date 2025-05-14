@@ -1,0 +1,74 @@
+[
+    {
+        "timestamp": "2025-04-28 11:16:16.534112",
+        "prediction": "healthy",
+        "confidence": "98.44%",
+        "solution": "No action needed. Maintain current practices!"
+    },
+    {
+        "timestamp": "2025-04-28 11:21:04.687325",
+        "prediction": "leaf_blast",
+        "confidence": "100.00%",
+        "solution": "Use recommended fungicide sprays and proper water management."
+    },
+    {
+        "timestamp": "2025-04-28 11:32:32.288995",
+        "prediction": "leaf_blast",
+        "confidence": "100.00%",
+        "solution": "Use recommended fungicide sprays and proper water management."
+    },
+    {
+        "timestamp": "2025-04-28 13:33:12.781286",
+        "prediction": "bacterial_leaf_blight",
+        "confidence": "100.00%",
+        "solution": "Use resistant varieties and proper field sanitation."
+    },
+    {
+        "timestamp": "2025-04-28 14:02:00.585253",
+        "prediction": "leaf_blast",
+        "confidence": "100.00%",
+        "solution": "Use recommended fungicide sprays and proper water management."
+    },
+    {
+        "timestamp": "2025-04-28 14:02:19.669055",
+        "prediction": "healthy",
+        "confidence": "98.44%",
+        "solution": "No action needed. Maintain current practices!"
+    },
+    {
+        "timestamp": "2025-04-28 14:02:26.613431",
+        "prediction": "leaf_blast",
+        "confidence": "98.79%",
+        "solution": "Use recommended fungicide sprays and proper water management."
+    },
+    {
+        "timestamp": "2025-04-28 14:09:08.125939",
+        "prediction": "healthy",
+        "confidence": "98.44%",
+        "solution": "No action needed. Maintain current practices!"
+    },
+    {
+        "timestamp": "2025-04-28 14:12:52.144647",
+        "prediction": "healthy",
+        "confidence": "98.44%",
+        "solution": "No action needed. Maintain current practices!"
+    },
+    {
+        "timestamp": "2025-04-28 14:16:06.734915",
+        "prediction": "leaf_blast",
+        "confidence": "100.00%",
+        "solution": "Use recommended fungicide sprays and proper water management."
+    },
+    {
+        "timestamp": "2025-04-28 14:17:21.036257",
+        "prediction": "healthy",
+        "confidence": "98.44%",
+        "solution": "No action needed. Maintain current practices!"
+    },
+    {
+        "timestamp": "2025-04-28 14:19:40.281990",
+        "prediction": "leaf_blast",
+        "confidence": "98.79%",
+        "solution": "Use recommended fungicide sprays and proper water management."
+    }
+]

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌾 Upload or Capture Paddy Leaf Image</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #091718, #12858b);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      color: #f0f0f0;
+    }
+
+    h1 {
+      color: #4cc550;
+      font-size: 2.8rem;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+    }
+
+    .nav-bar {
+      width: 100%;
+      background: linear-gradient(to right, #2cc88f, #0a5139);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-bar a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 18px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-bar a:hover {
+      background-color: #0d3930;
+      transform: translateY(-2px);
+    }
+
+    .upload-box {
+      border: 2px dashed #4CAF50;
+      background-color: #0f0d0d;
+      background: linear-gradient(to right, #092222, #050506);
+      padding: 2px 2px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 15px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    input[type="file"], button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    video, canvas, img {
+      margin-top: 20px;
+      width: 300px;
+      border-radius: 10px;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 20px;
+      color: #333;
+      font-weight: 600;
+      background: #e8f5e9;
+      padding: 15px 20px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    
+  </style>
+
+
+</head>
+<body>
+
+<!-- Navigation -->
+<div class="nav-bar">
+  <a href="home.html">Home</a>
+  <a href="upload.html">Upload</a>
+  <a href="about.html">About</a>
+  <a href="history.html">History</a>
+</div>
+
+
+<h1>🌾 Paddy Leaf Disease Identifier</h1>
+
+<div class="upload-box">
+  <input type="file" id="fileInput" accept="image/*">
+  <br>
+  <button onclick="uploadImage()">Predict Uploaded</button>
+  <br><br>
+  <button onclick="openCamera()">Open Camera</button>
+  <button onclick="captureImage()">Capture & Predict</button>
+  <br>
+  <video id="video" autoplay playsinline></video>
+  <br>
+  <canvas id="canvas" style="display: none;"></canvas>
+</div>
+
+<div id="preview"></div>
+<div class="result" id="result"></div>
+
+<script>
+  const video = document.getElementById("video");
+  const canvas = document.getElementById("canvas");
+  const resultDiv = document.getElementById("result");
+
+  function openCamera() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+        video.style.display = "block";
+      })
+      .catch(err => {
+        alert("Camera access error: " + err.message);
+      });
+  }
+
+  function captureImage() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext("2d");
+    context.drawImage(video, 0, 0);
+
+    const stream = video.srcObject;
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+    video.srcObject = null;
+    video.style.display = "none";
+
+    canvas.toBlob(blob => {
+      const formData = new FormData();
+      formData.append('file', blob, 'captured.jpg');
+
+      fetch('http://localhost:5000/predict', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        resultDiv.innerHTML = `
+          <div><strong>Prediction:</strong> <span>${data.prediction}</span></div>
+          <div><strong>Confidence:</strong> <span>${data.confidence}</span></div>
+          <div><strong>Solution:</strong> <span>${data.solution}</span></div>
+        `;
+        document.getElementById('preview').innerHTML = `<img src="data:image/jpeg;base64,${data.image}" />`;
+        scrollToResult();
+      })
+      .catch(err => {
+        resultDiv.textContent = "Prediction error: " + err.message;
+      });
+    }, 'image/jpeg');
+  }
+
+  function uploadImage() {
+    const fileInput = document.getElementById('fileInput');
+    if (fileInput.files.length === 0) {
+      alert('Please upload an image first.');
+      return;
+    }
+
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('http://localhost:5000/predict', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      resultDiv.innerHTML = `
+        <div><strong>Prediction:</strong> <span>${data.prediction}</span></div>
+        <div><strong>Confidence:</strong> <span>${data.confidence}</span></div>
+        <div><strong>Solution:</strong> <span>${data.solution}</span></div>
+      `;
+      document.getElementById('preview').innerHTML = `<img src="data:image/jpeg;base64,${data.image}" />`;
+      scrollToResult();
+    })
+    .catch(error => {
+      resultDiv.textContent = "Error: " + error.message;
+    });
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview').innerHTML = `<img src="${e.target.result}" />`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function scrollToResult() {
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+    }, 100);
+  }
+</script>
+
+</body>
+</html>

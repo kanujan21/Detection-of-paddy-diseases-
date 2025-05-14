@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🌾 Paddy Leaf Disease Identifier - Home</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #091718, #38d6df);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            color: #f0f0f0;
+        }
+    
+        .nav-bar {
+            width: 100%;
+            background: linear-gradient(to right, #2cc88f, #0a5139);
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+    
+        .nav-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+    
+        .nav-bar a:hover {
+            background-color: #0d3930;
+            transform: scale(1.05);
+        }
+    
+        h1 {
+            margin-top: 60px;
+            font-size: 2.5rem;
+            color: #4CAF50;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+    
+        .content {
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 20px;
+            max-width: 800px;
+            text-align: center;
+            background: linear-gradient(to right, #415656, #050506);;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+    
+        a.button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+    
+        a.button:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+        }
+    </style>
+    
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="nav-bar">
+    <a href="home.html">Home</a>
+    <a href="upload.html">Upload</a>
+    <a href="about.html">About</a>
+    <a href="history.html">History</a>
+</div>
+
+<h1>🌾 Paddy Leaf Disease Identifier</h1>
+
+<div class="content">
+    <p>Welcome to the Paddy Leaf Disease Identifier. This web application uses machine learning to identify diseases in paddy leaves from uploaded images.</p>
+    <p>Click below to upload a paddy leaf image and get the disease prediction:</p>
+    <a href="upload.html">
+        <button style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">Go to Upload Page</button>
+    </a>
+</div>
+
+</body>
+</html>
